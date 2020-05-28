@@ -22,23 +22,23 @@
 
 <%--角色校验标签--%>
 <%--hasRole和lackRole 相当于if和else--%>
-<shiro:hasRole name="admin">
-    <a href="#">到财务取钱</a>
+<shiro:hasRole name="班长">
+    <a href="#">班长操作</a>
 </shiro:hasRole>
-<shiro:lacksRole name="admin">
-    <a href="#">等财务发工资</a>
+<shiro:lacksRole name="班长">
+    <a href="#">同学操作</a>
 </shiro:lacksRole>
-<shiro:hasAnyRoles name="admin,manager">
-    <a href="#">招聘讲师</a>
+<shiro:hasAnyRoles name="班长,同学">
+    <a href="#">进班学习</a>
 </shiro:hasAnyRoles>
 <hr>
 
 <%--权限校验标签--%>
-<shiro:hasPermission name="user:query">
-    <a href="#">所有用户</a>
+<shiro:hasPermission name="student:yq">
+    <a href="#">收罚款</a>
 </shiro:hasPermission>
-<shiro:lacksPermission name="user:query">
-    <a href="#">个人信息</a>
+<shiro:lacksPermission name="student:yq">
+    <a href="#">进班学习</a>
 </shiro:lacksPermission>
 </body>
 </html>

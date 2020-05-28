@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--  引入jdbc配置文件  -->
+    <bean id="jdbcConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties" />
+    </bean>
+
+    <!--  连接池：Druid  -->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!--  数据库基本信息配置  -->
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="url" value="${jdbc.url}" />
+        <!--  数据库详细信息配置  -->
+        <!--  初始化连接数量  -->
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <!--  最小空闲连接数量  -->
+        <property name="minIdle" value="${jdbc.minIdle}" />
+        <!--  最大空闲连接数量  -->
+        <property name="maxIdle" value="${jdbc.maxIdle}" />
+        <!--  最大连接数量  -->
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <!-- 最大连接等待超时的时间 -->
+        <property name="maxWait" value="${jdbc.maxWait}" />
+    </bean>
+
+    <!-- 交给Spring管理 -->
+    <bean id="sqlSessionFactory01" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="druid" />
+        <property name="configLocation" value="classpath:mybatis_config.xml" />
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+    </bean>
+
+    <!--对注解的扫描-->
+    <context:component-scan base-package="com.clw"/>
+
+    <!-- 注解扫描Mapper -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 如果当前工厂中 只有一个SqlSessionFactory,则此项注入可以省略 -->
+        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory01"/>-->
+        <property name="basePackage" value="com.clw.mapper" />
+    </bean>
+
+    <!-- 事务配置 -->
+    <!-- 事务管理器 -->
+    <bean id="tx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="druid" />
+    </bean>
+
+    <!-- 支持 @Transactional 实现事务 -->
+    <tx:annotation-driven transaction-manager="tx"/>
 </beans>
