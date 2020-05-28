@@ -1,7 +1,43 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
   <display-name>Archetype Created Web Application</display-name>
+
+  <!-- 配置前端控制器 -->
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:application.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!-- 接收所有请求，通过请求路径判断是否需要安全校验，如果需要则触发安全校验
+       做访问控制时，会遍历过滤器。(链中包含shiro.ini中urls内使用的过滤器)
+       会通过ThreadContext在当前线程中绑定一个subject和SecurityManager，共请求内部使用
+       可以通过SecurityUtils.getSubject()获取Subject
+   -->
+  <filter>
+    <filter-name>shiroFilter</filter-name>
+    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>shiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- 在项目启动时，加载web-info 或 classpath下的 shiro.ini ，并构建WebSecurityManager。
+   构建所有配置中使用的过滤器链(anon,authc等)，ShiroFilter会获取此过滤器链
+  -->
+  <listener>
+    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+  </listener>
 </web-app>
