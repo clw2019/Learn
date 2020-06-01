@@ -17,4 +17,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User queryUserByUserName(@Param("username") String username);
+
+    Integer register(User user);
 }

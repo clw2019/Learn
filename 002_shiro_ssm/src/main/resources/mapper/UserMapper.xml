@@ -7,10 +7,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, username, `password`
+    id, username, `password`, salt
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -26,8 +27,8 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.clw.domain.User" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into user (username, `password`)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+    insert into user (username, `password`, salt)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.clw.domain.User" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -39,6 +40,9 @@
       <if test="password != null">
         `password`,
       </if>
+      <if test="salt != null">
+        salt
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -46,6 +50,9 @@
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -59,6 +66,9 @@
       <if test="password != null">
         `password` = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR}
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -66,7 +76,8 @@
     <!--@mbg.generated-->
     update user
     set username = #{username,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR}
+      `password` = #{password,jdbcType=VARCHAR},
+        salt = #{salt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -75,4 +86,7 @@
       from user
       where username = #{username}
     </select>
+    <insert id="register">
+      insert into user(username, password, salt) values (#{username}, #{password}, #{salt})
+    </insert>
 </mapper>

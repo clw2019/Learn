@@ -19,4 +19,6 @@ public interface UserService{
 
     User queryUserByUserName(String username);
 
+    Integer register(User user);
+
 }

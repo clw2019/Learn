@@ -1,11 +1,14 @@
 package com.clw.service.serviceImpl;
 
+import com.clw.constant.MyConstant;
 import com.clw.domain.User;
 import com.clw.mapper.UserMapper;
 import com.clw.service.UserService;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,6 +50,16 @@ public class UserServiceImpl implements UserService {
     public User queryUserByUserName(String username) {
         User user = userMapper.queryUserByUserName(username);
         return user;
+    }
+
+    @Override
+    public Integer register(User user) {
+        String salt = UUID.randomUUID().toString();
+        String s = new Sha256Hash(user.getUsername(), salt, MyConstant.ITERATERATIO).toBase64();
+        user.setPassword(s);
+        user.setSalt(salt);
+        Integer result = userMapper.register(user);
+        return result;
     }
 
 }
