@@ -87,5 +87,9 @@
                 <bean class="com.clw.listener.MySessionListener" />
             </list>
         </property>
+        <!-- session检测默认开启 -->
+        <property name="sessionValidationSchedulerEnabled" value="true" />
+        <!-- session检测时间间隔，默认每隔3600000毫秒，即1小时 -->
+        <property name="sessionValidationInterval" value="3600000" />
     </bean>
 </beans>
