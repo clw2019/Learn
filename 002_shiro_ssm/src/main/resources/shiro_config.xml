@@ -81,5 +81,11 @@
         <property name="sessionIdCookie" ref="sessionIdCookie" />
         <!-- session 过期时间，单位：毫秒，默认值1800000，即30分钟 -->
         <property name="globalSessionTimeout" value="1800000" />
+        <!-- 注册session监听器 -->
+        <property name="sessionListeners">
+            <list>
+                <bean class="com.clw.listener.MySessionListener" />
+            </list>
+        </property>
     </bean>
 </beans>
