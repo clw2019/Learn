@@ -21,6 +21,8 @@
     <!--  SecurityManager  -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" destroy-method="afterCacheManagerSet">
         <property name="realm" ref="myRealm" />
+        <!--记住我管理器-->
+        <property name="rememberMeManager" ref="rememberManager" />
     </bean>
 
     <!--  shiroFilter  -->
@@ -40,5 +42,25 @@
                 /user/logout=logout
             </value>
         </property>
+    </bean>
+
+    <!-- remember me -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- rememberMe是cookie值中的key，value时用户名的密文
+            cookie["rememberMe":"deleteMe"] 此cookie每次登陆后都会写出，用于清除之前的cookie
+            cookie["rememberMe":username的密文] 此cookie也会在登录后写出，用于记录最新的username
+           （ops: 如上设计，既能保证每次登陆后重新记录cookie，也能保证切换账号时，记录最新账号）
+       -->
+        <!-- cookie名，默认就是rememberMe -->
+        <property name="name" value="rememberMe" />
+        <!-- cookie只在http请求中可用，默认就是true -->
+        <property name="httpOnly" value="true" />
+        <!-- cookie生命周期，单位：秒，默认：31536000 即一年 604800 即一周-->
+        <property name="maxAge" value="604800" />
+    </bean>
+
+    <!--记住我管理器-->
+    <bean id="rememberManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie" />
     </bean>
 </beans>
