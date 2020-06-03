@@ -32,18 +32,21 @@
         <!--  核心对象  -->
         <property name="securityManager" ref="securityManager" />
         <!--  未登录，没有权限时的跳转路径  -->
-        <property name="loginUrl" value="/user/login" />
-        <property name="unauthorizedUrl" value="/user/perms/error" />
+        <!--  在SpringMVC中配置了aop，使用注解了，这里就无效了  -->
+<!--        <property name="loginUrl" value="/user/login" />-->
+<!--        <property name="unauthorizedUrl" value="/user/perms/error" />-->
+
         <!--  过滤器链  -->
-        <property name="filterChainDefinitions">
-            <value>
-                /user/all=authc,roles["班长"]
-                /user/logout=logout
-<!--                /user/insert=authc,roles["banfu"]-->
-<!--                /user/update=authc,perms[""student:update""]-->
-<!--                /order/insert/=authc,roles["xuewei"]-->
-            </value>
-        </property>
+        <!--  在SpringMVC中配置了增强，使用注解了，这里就无效了  -->
+<!--        <property name="filterChainDefinitions">-->
+<!--            <value>-->
+<!--                /user/all=authc,roles["班长"]-->
+<!--                /user/logout=logout-->
+<!--&lt;!&ndash;                /user/insert=authc,roles["banfu"]&ndash;&gt;-->
+<!--&lt;!&ndash;                /user/update=authc,perms[""student:update""]&ndash;&gt;-->
+<!--&lt;!&ndash;                /order/insert/=authc,roles["xuewei"]&ndash;&gt;-->
+<!--            </value>-->
+<!--        </property>-->
     </bean>
 
     <!-- remember me -->

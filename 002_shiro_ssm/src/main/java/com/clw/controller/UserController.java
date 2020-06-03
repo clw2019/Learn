@@ -73,4 +73,10 @@ public class UserController {
         }
         return null;
     }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        SecurityUtils.getSubject().logout();
+        return "index";
+    }
 }

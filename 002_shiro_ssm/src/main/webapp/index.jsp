@@ -53,6 +53,6 @@
 </shiro:lacksPermission>
 
 <hr>
-    ${sessionScope.name}
+<%--    ${sessionScope.name}--%>
 </body>
 </html>
