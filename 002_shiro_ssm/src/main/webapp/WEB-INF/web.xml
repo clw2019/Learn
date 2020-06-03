@@ -34,9 +34,24 @@
        会通过ThreadContext在当前线程中绑定一个subject和SecurityManager，共请求内部使用
        可以通过SecurityUtils.getSubject()获取Subject
    -->
+
+<!-- shiroFilter放到Spring中了，但是外部还需要一个过滤器,DelegatingFilterProxy根据<filter-name>shiroFilter</filter-name>作为id到Spring工厂找 -->
+<!--  <filter>-->
+<!--    <filter-name>shiroFilter</filter-name>-->
+<!--    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>-->
+<!--  </filter>-->
+<!--  <filter-mapping>-->
+<!--    <filter-name>shiroFilter</filter-name>-->
+<!--    <url-pattern>/*</url-pattern>-->
+<!--  </filter-mapping>-->
+
   <filter>
     <filter-name>shiroFilter</filter-name>
-    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
@@ -46,9 +61,10 @@
   <!-- 在项目启动时，加载web-info 或 classpath下的 shiro.ini ，并构建WebSecurityManager。
    构建所有配置中使用的过滤器链(anon,authc等)，ShiroFilter会获取此过滤器链
   -->
-  <listener>
-    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-  </listener>
+<!-- shiro环境已经交给Spring初始化了，shiro.ini,已经不需要了 -->
+<!--  <listener>-->
+<!--    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>-->
+<!--  </listener>-->
 
   <!-- 中文乱码 -->
   <filter>

@@ -4,6 +4,7 @@ import com.clw.domain.User;
 import com.clw.service.PermissionService;
 import com.clw.service.RoleService;
 import com.clw.service.UserService;
+import lombok.Setter;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,7 +23,12 @@ import java.util.Set;
  * @Description:
  * @Date: 2020/5/28 17:36
  */
+@Setter     //这里使用setter是为了后面shiro_config.xml里方便注入,也可以用@Conponent + @Resource，但注入不方便还有
 public class MyRealm extends AuthorizingRealm {
+
+    private UserService userService;
+    private RoleService roleService;
+    private PermissionService permissionService;
     /**
      * 作用：查权限信息,并返回即可，不用任何比对
      * 何时出发：/user/query = roles["admin"]    /user/insert = perms["user:insert"]     <shiro:hasRole  <shiro:hasPermission
@@ -37,8 +43,8 @@ public class MyRealm extends AuthorizingRealm {
         String username = (String) principalCollection.getPrimaryPrincipal();
         // 查询当前所有用户的权限信息：RoleService：public List<String:RoleName> queryAllRolesByUsername(String username)
         //                          PermissionService：public List<String: PermissionStr> queryAllPermissionByUsername(String username)
-        RoleService roleService = ContextLoader.getCurrentWebApplicationContext().getBean("roleServiceImpl", RoleService.class);
-        PermissionService permissionService = ContextLoader.getCurrentWebApplicationContext().getBean("permissionServiceImpl", PermissionService.class);
+        //RoleService roleService = ContextLoader.getCurrentWebApplicationContext().getBean("roleServiceImpl", RoleService.class);
+        //PermissionService permissionService = ContextLoader.getCurrentWebApplicationContext().getBean("permissionServiceImpl", PermissionService.class);
         // 查询当前用户的权限信息
         Set<String> roleSet = roleService.queryAllRolesByUsername(username);
         Set<String> permissionSet = permissionService.queryAllPermissionByUsername(username);
@@ -62,7 +68,7 @@ public class MyRealm extends AuthorizingRealm {
         // 查询用户登录时发送来的用户名
         String username = (String) authenticationToken.getPrincipal();
         // 查询用户信息：UserService：public User queryUserByUserName(String username)
-        UserService userService = ContextLoader.getCurrentWebApplicationContext().getBean("userServiceImpl", UserService.class);
+        //UserService userService = ContextLoader.getCurrentWebApplicationContext().getBean("userServiceImpl", UserService.class);
         // 查询到用户信息
         User user = userService.queryUserByUserName(username);
         System.out.println("user.... " + user);
