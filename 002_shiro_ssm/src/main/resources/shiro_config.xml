@@ -30,16 +30,16 @@
         <!--  核心对象  -->
         <property name="securityManager" ref="securityManager" />
         <!--  未登录，没有权限时的跳转路径  -->
-        <property name="loginUrl" value="/user/login/page" />
-        <property name="unauthorizedUrl" value="error.jsp" />
+        <property name="loginUrl" value="/user/login" />
+        <property name="unauthorizedUrl" value="/user/perms/error" />
         <!--  过滤器链  -->
         <property name="filterChainDefinitions">
             <value>
-                /user/query=anon
-                /user/insert=authc,roles["banfu"]
-                /user/update=authc,perms[""student:update""]
-                /order/insert/=authc,roles["xuewei"]
+                /user/all=authc,roles["班长"]
                 /user/logout=logout
+<!--                /user/insert=authc,roles["banfu"]-->
+<!--                /user/update=authc,perms[""student:update""]-->
+<!--                /order/insert/=authc,roles["xuewei"]-->
             </value>
         </property>
     </bean>

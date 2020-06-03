@@ -7,14 +7,25 @@
 
 <%--身份认证标签--%>
 <%--已登录--%>
-<shiro:authenticated>
+<%--<shiro:authenticated>--%>
+<%--    欢迎您，--%>
+<%--    <shiro:principal />--%>
+<%--    <a href="${pageContext.request.contextPath}/user/logout">登出</a>--%>
+<%--</shiro:authenticated>--%>
+
+<%--<shiro:notAuthenticated>--%>
+<%--    <a href="${pageContext.request.contextPath}/user/login">请登录</a>--%>
+<%--</shiro:notAuthenticated>--%>
+
+<shiro:user>
     欢迎您，
     <shiro:principal />
     <a href="${pageContext.request.contextPath}/user/logout">登出</a>
-</shiro:authenticated>
-<shiro:notAuthenticated>
+</shiro:user>
+<shiro:guest>
     <a href="${pageContext.request.contextPath}/user/login">请登录</a>
-</shiro:notAuthenticated>
+</shiro:guest>
+
 <shiro:guest>
     游客~~
 </shiro:guest>
