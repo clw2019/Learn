@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer register(User user) {
         String salt = UUID.randomUUID().toString();
-        String s = new Sha256Hash(user.getUsername(), salt, MyConstant.ITERATERATIO).toBase64();
+        String s = new Sha256Hash(user.getPassword(), salt, MyConstant.ITERATERATIO).toBase64();
         user.setPassword(s);
         user.setSalt(salt);
         Integer result = userMapper.register(user);

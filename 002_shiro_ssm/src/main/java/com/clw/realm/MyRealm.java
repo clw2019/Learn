@@ -12,6 +12,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.web.context.ContextLoader;
 
 import java.util.Set;
@@ -64,6 +65,7 @@ public class MyRealm extends AuthorizingRealm {
         UserService userService = ContextLoader.getCurrentWebApplicationContext().getBean("userServiceImpl", UserService.class);
         // 查询到用户信息
         User user = userService.queryUserByUserName(username);
+        System.out.println("user.... " + user);
         // 判断用户信息是否为null
         if (user == null) {
             return null;//在后续流程中跑出异常UnknownAccountException
@@ -71,6 +73,7 @@ public class MyRealm extends AuthorizingRealm {
         // 将用户信息封装在 AuthenticationInfo 中
         return new SimpleAuthenticationInfo(user.getUsername(),
                                             user.getPassword(),
-                                            this.getName());//realm标识
+                                            ByteSource.Util.bytes(user.getSalt()),
+                                            getName());//realm标识
     }
 }
