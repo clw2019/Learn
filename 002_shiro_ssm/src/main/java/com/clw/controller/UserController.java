@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Author: clw
@@ -46,8 +47,9 @@ public class UserController {
 
     // 只有登录，且有权限才可访问
     @GetMapping("/all")
-    public String queryAllUsers() {
+    public String queryAllUsers(HttpSession session) {
         System.out.println("query all users");
+        session.setAttribute("name", "且随疾风前行");
         return "index";
     }
 

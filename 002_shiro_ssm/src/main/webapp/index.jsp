@@ -51,5 +51,8 @@
 <shiro:lacksPermission name="student:yq">
     <a href="#">进班学习</a>
 </shiro:lacksPermission>
+
+<hr>
+    ${sessionScope.name}
 </body>
 </html>

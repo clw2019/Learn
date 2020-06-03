@@ -23,6 +23,8 @@
         <property name="realm" ref="myRealm" />
         <!--记住我管理器-->
         <property name="rememberMeManager" ref="rememberManager" />
+        <!-- session管理器 -->
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <!--  shiroFilter  -->
@@ -62,5 +64,22 @@
     <!--记住我管理器-->
     <bean id="rememberManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
         <property name="cookie" ref="rememberMeCookie" />
+    </bean>
+
+    <!-- 会话Cookie，默认可省 -->
+    <!-- SimpleCookie => DefaultWebSessionManager =>  DefaultWebSecurityManager -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- Cookie 的key -->
+        <property name="name" value="JSESSIONID" />
+        <!-- 只允许http请求访问Cookie -->
+        <property name="httpOnly" value="true" />
+        <!-- Cookie 过期时间，-1：存活一个会话，单位：秒，默认-1 -->
+        <property name="maxAge" value="-1" />
+    </bean>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 默认值和配置中给出的一致，所以bean：sessionIdCookie 可省略 -->
+        <property name="sessionIdCookie" ref="sessionIdCookie" />
+        <!-- session 过期时间，单位：毫秒，默认值1800000，即30分钟 -->
+        <property name="globalSessionTimeout" value="1800000" />
     </bean>
 </beans>
