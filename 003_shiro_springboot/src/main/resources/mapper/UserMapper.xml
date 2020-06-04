@@ -82,4 +82,7 @@
       salt = #{salt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <insert id="register">
+      insert into user(username, password, salt) VALUES (#{user.username}, #{user.password}, #{user.salt})
+    </insert>
 </mapper>
