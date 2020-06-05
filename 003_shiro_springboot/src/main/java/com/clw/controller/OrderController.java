@@ -1,9 +1,6 @@
 package com.clw.controller;
 
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/order")
 public class OrderController {
 
-    @RequiresAuthentication
+    //@RequiresUser  //登录且记住我，ps:没有起作用，可在ShiroConfig的过滤器中配置
     @GetMapping("/query")
     public String query() {
         return "query";
     }
 
-    @RequiresAuthentication
+    @RequiresAuthentication  //只有登录才能访问。登录记住我后，关闭浏览器，只能访问带@RequiresUser的，不能访问带@RequiresAuthentication
     @RequiresPermissions("order:add")
     @GetMapping("/add")
     public String add() {

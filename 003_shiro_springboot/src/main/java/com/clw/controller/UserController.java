@@ -24,6 +24,12 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @GetMapping("/index")
+    public String index() {
+        System.out.println("go to index page");
+        return "index";
+    }
+
     @GetMapping("/login")
     public String login() {
         System.out.println("go to login page");
@@ -71,5 +77,11 @@ public class UserController {
     public String logout() {
         SecurityUtils.getSubject().logout();
         return "login";
+    }
+
+    @GetMapping("/403")
+    public String unauthorized() {
+        SecurityUtils.getSubject().logout();
+        return "403";
     }
 }
