@@ -58,4 +58,11 @@
     set role_name = #{roleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="queryAllRolesByUsername" resultType="java.lang.String">
+      select DISTINCT r.role_name
+      from role r
+      left join user_role ur on r.id = ur.role_id
+      left join user u on ur.user_id = u.id
+      where u.username = #{username}
+    </select>
 </mapper>

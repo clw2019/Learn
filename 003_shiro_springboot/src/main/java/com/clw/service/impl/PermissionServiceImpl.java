@@ -5,6 +5,9 @@ import javax.annotation.Resource;
 import com.clw.mapper.PermissionMapper;
 import com.clw.domain.Permission;
 import com.clw.service.PermissionService;
+
+import java.util.Set;
+
 @Service
 public class PermissionServiceImpl implements PermissionService{
 
@@ -39,6 +42,12 @@ public class PermissionServiceImpl implements PermissionService{
     @Override
     public int updateByPrimaryKey(Permission record) {
         return permissionMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public Set<String> queryAllPermissionByUsername(String username) {
+        Set<String> permissionList = permissionMapper.queryAllPermissionByUsername(username);
+        return permissionList;
     }
 
 }

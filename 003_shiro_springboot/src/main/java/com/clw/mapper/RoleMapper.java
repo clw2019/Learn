@@ -1,6 +1,9 @@
 package com.clw.mapper;
 
 import com.clw.domain.Role;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Set;
 
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    Set<String> queryAllRolesByUsername(@Param("username") String username);
 }

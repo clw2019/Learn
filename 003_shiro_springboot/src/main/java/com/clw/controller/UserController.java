@@ -33,6 +33,14 @@ public class UserController {
     @PostMapping("/login")
     public String loginLogic(User user) {
         System.out.println("login logic");
+        System.out.println("... " + user);
+        // 获取subject
+        Subject subject = SecurityUtils.getSubject();
+        // 创建登录令牌
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+        // 开启记住我
+        token.setRememberMe(true);
+        subject.login(token);
         return "index";
     }
 

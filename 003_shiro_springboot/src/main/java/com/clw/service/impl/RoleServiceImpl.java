@@ -5,6 +5,9 @@ import javax.annotation.Resource;
 import com.clw.domain.Role;
 import com.clw.mapper.RoleMapper;
 import com.clw.service.RoleService;
+
+import java.util.Set;
+
 @Service
 public class RoleServiceImpl implements RoleService{
 
@@ -39,6 +42,12 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public int updateByPrimaryKey(Role record) {
         return roleMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public Set<String> queryAllRolesByUsername(String username) {
+        Set<String> roleList = roleMapper.queryAllRolesByUsername(username);
+        return roleList;
     }
 
 }

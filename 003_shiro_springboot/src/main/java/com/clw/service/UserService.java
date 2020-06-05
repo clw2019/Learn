@@ -17,4 +17,6 @@ public interface UserService{
     int updateByPrimaryKey(User record);
 
     Integer register(User user);
+
+    User queryUserByUserName(String username);
 }

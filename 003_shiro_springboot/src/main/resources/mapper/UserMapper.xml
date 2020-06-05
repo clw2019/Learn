@@ -85,4 +85,9 @@
     <insert id="register">
       insert into user(username, password, salt) VALUES (#{user.username}, #{user.password}, #{user.salt})
     </insert>
+    <select id="queryUserByUserName" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"></include>
+      from user
+      where username = #{username}
+    </select>
 </mapper>

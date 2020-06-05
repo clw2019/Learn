@@ -1,6 +1,9 @@
 package com.clw.service;
 
 import com.clw.domain.Role;
+
+import java.util.Set;
+
 public interface RoleService{
 
 
@@ -16,4 +19,5 @@ public interface RoleService{
 
     int updateByPrimaryKey(Role record);
 
+    Set<String> queryAllRolesByUsername(String username);
 }

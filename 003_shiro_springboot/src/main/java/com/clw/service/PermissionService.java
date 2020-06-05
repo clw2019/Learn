@@ -1,6 +1,9 @@
 package com.clw.service;
 
 import com.clw.domain.Permission;
+
+import java.util.Set;
+
 public interface PermissionService{
 
 
@@ -16,4 +19,5 @@ public interface PermissionService{
 
     int updateByPrimaryKey(Permission record);
 
+    Set<String> queryAllPermissionByUsername(String username);
 }
