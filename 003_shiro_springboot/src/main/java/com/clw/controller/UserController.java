@@ -61,4 +61,15 @@ public class UserController {
         return null;
     }
 
+    @GetMapping("/add")
+    public String add() {
+        System.out.println("go to add page");
+        return "add";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        SecurityUtils.getSubject().logout();
+        return "login";
+    }
 }
