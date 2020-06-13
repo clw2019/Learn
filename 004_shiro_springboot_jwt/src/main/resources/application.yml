@@ -1,0 +1,21 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /spj
+spring:
+  application:
+    name: shiro_springboot_jwt
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot_shiro_jwt?serverTimezone=Asia/Shanghai
+    username: root
+    password: wj113
+mybatis:
+  type-aliases-package: com.clw.domain.*    #起别名
+  mapper-locations: classpath:mapper/*.xml  #当mybatis的xml文件和mapper接口不在相同包下时，需要用mapperLocations属性指定xml文件的路径
+
+#自定义
+jwt:
+  secret: mySecret #JWT秘钥
+  expiration: 604800 #JWT的过期时间60*60*24*7 = 604800,如果采用表达式会报错，把表达式当成了String
+  tokenHeader: Authorization #JWT 存储的请求头
