@@ -1,6 +1,6 @@
 package com.clw.sys.mapper;
 
-import com.clw.sys.domain.User;
+import com.clw.sys.domain.Teacher;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author clw
  * @since 2020-06-26
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface TeacherMapper extends BaseMapper<Teacher> {
 
 }

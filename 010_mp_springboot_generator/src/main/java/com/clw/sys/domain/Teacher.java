@@ -20,23 +20,17 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("student")
-@ApiModel(value="Student对象", description="")
-public class Student implements Serializable {
+@TableName("work_teacher")
+@ApiModel(value="Teacher对象", description="")
+public class Teacher implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "姓名")
-    @TableField("user_name")
-    private String userName;
-
-    @ApiModelProperty(value = "年龄")
-    @TableField("age")
-    private Integer age;
+    @TableField("name")
+    private String name;
 
 
 }

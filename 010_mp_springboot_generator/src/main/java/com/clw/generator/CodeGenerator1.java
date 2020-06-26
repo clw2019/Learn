@@ -3,6 +3,7 @@ package com.clw.generator;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,6 +35,22 @@ public class CodeGenerator1 {
     }
 
     public static void main(String[] args) {
+        //作者
+        String author = "clw";
+        //模块名
+        String moduleName = "sys";
+        //包名
+        String parentPackage = "com.clw";
+        //需要生成的表
+        String[] tableNames = new String[]{"user", "student", "work_teacher"};
+        //需要去除表的前缀
+        String[] tablePrefix = new String[]{"sys_", "work_"};
+        //数据库配置
+        String username = "root";
+        String password = "wj113";
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/008_mp_springboot?serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&characterEncoding=utf8";
+
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -41,9 +58,13 @@ public class CodeGenerator1 {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("clw");
+        gc.setAuthor(author);
         gc.setOpen(false); //当代码生成完成之后是否打开代码所在的文件夹
-        // gc.setSwagger2(true); 实体属性 Swagger2 注解
+        gc.setDateType(DateType.ONLY_DATE);
+        gc.setEnableCache(false);  //XML 二级缓存
+        gc.setBaseResultMap(true);  //XML 通用查询映射结果 ResultMap
+        gc.setBaseColumnList(true);  //XML 通用查询结果列 columnList
+        gc.setSwagger2(true); //实体属性 Swagger2 注解
         // 干掉生成的Service层接口的I,即: IUserService => UserService
         gc.setServiceName("%sService");
 
@@ -51,18 +72,19 @@ public class CodeGenerator1 {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/008_mp_springboot?serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl(url);
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("wj113");
+        dsc.setDriverName(driver);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
         //pc.setModuleName(scanner("模块名"));
-        pc.setModuleName("sys");  // 模块名写死 : sys
-        pc.setParent("com.clw"); //默认生成 controller, entity, service, service.impl, mapper
+        //pc.setModuleName("sys");  // 模块名写死 : sys
+        pc.setModuleName(moduleName);  // 模块名写死 : sys
+        pc.setParent(parentPackage); //默认生成 controller, entity, service, service.impl, mapper
 
         pc.setController("controller");
         pc.setEntity("domain");
@@ -144,9 +166,12 @@ public class CodeGenerator1 {
         //strategy.setSuperEntityColumns("id");
         //strategy.setInclude 注释掉后所有的表都会被生成
         //strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(tableNames);
+        // 生成TableField注解
+        strategy.setEntityTableFieldAnnotationEnable(true);
         strategy.setControllerMappingHyphenStyle(true);
         // 下面设置去除表的前缀
-        //strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix(tablePrefix);
         mpg.setStrategy(strategy);
         //mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

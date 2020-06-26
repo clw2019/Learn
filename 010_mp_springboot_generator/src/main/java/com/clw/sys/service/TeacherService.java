@@ -1,6 +1,6 @@
 package com.clw.sys.service;
 
-import com.clw.sys.domain.Student;
+import com.clw.sys.domain.Teacher;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author clw
  * @since 2020-06-26
  */
-public interface StudentService extends IService<Student> {
+public interface TeacherService extends IService<Teacher> {
 
 }

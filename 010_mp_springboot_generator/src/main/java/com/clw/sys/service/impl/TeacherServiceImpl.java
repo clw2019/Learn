@@ -1,8 +1,8 @@
 package com.clw.sys.service.impl;
 
-import com.clw.sys.domain.User;
-import com.clw.sys.mapper.UserMapper;
-import com.clw.sys.service.UserService;
+import com.clw.sys.domain.Teacher;
+import com.clw.sys.mapper.TeacherMapper;
+import com.clw.sys.service.TeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-06-26
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
 
 }
