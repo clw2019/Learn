@@ -1,6 +1,7 @@
 package com.clw.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.clw.shiro.salt.MyByteSource;
 import com.clw.sys.entity.Permission;
 import com.clw.sys.entity.Role;
 import com.clw.sys.entity.User;
@@ -68,7 +69,7 @@ public class CustomRealm extends AuthorizingRealm {
 
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, principal));
         if (!ObjectUtils.isEmpty(user)) {
-            return new SimpleAuthenticationInfo(principal, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
+            return new SimpleAuthenticationInfo(principal, user.getPassword(), new MyByteSource(user.getSalt()), getName());
         }
 
         return null;

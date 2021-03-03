@@ -1,7 +1,10 @@
 package com.clw.config;
 
 import com.clw.shiro.CustomRealm;
+import com.clw.shiro.cache.RedisCacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -64,6 +67,15 @@ public class ShiroConfig {
         credentialsMatcher.setHashAlgorithmName("MD5");
         credentialsMatcher.setHashIterations(iterations);
         customRealm.setCredentialsMatcher(credentialsMatcher);
+
+        //开启默认的缓存管理
+        // customRealm.setCacheManager(new EhCacheManager());
+        customRealm.setCacheManager(new RedisCacheManager());
+        customRealm.setCachingEnabled(true);    //开启全局缓存
+        customRealm.setAuthenticationCachingEnabled(true);  // 开启认证缓存
+        customRealm.setAuthenticationCacheName("authenticationCache");
+        customRealm.setAuthorizationCachingEnabled(true);   // 开启授权缓存
+        customRealm.setAuthorizationCacheName("authorizationCache");
         return customRealm;
     }
 }
