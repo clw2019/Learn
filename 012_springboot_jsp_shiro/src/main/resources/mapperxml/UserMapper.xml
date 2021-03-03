@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clw.sys.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.clw.sys.entity.User">
+    <!--@mbg.generated-->
+    <!--@Table sys_user-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, username, `password`, salt
+  </sql>
+
+  <resultMap id="userMap" type="com.clw.sys.vo.LoginUser">
+    <id column="uid" property="id" />
+    <result column="username" property="username" />
+    <!--角色信息-->
+    <collection property="roles" ofType="com.clw.sys.entity.Role" javaType="list">
+      <id column="rid" property="id" />
+      <result column="roleName" property="name" />
+    </collection>
+  </resultMap>
+  <select id="findRolesByUsername" resultMap="userMap">
+    SELECT
+        u.id AS uid,
+        u.username,
+        sr.id AS rid,
+        sr.name AS roleName
+    FROM sys_user u
+    LEFT JOIN sys_user_role sur on u.id = sur.user_id
+    LEFT JOIN sys_role sr on sur.role_id = sr.id
+    WHERE u.username = #{username}
+    </select>
+
+  <select id="findPermissionByRoleId" resultType="com.clw.sys.entity.Permission">
+    SELECT
+        sp.id,
+        sp.name,
+        sp.url,
+        sr.name
+    FROM sys_permission sp
+    LEFT JOIN sys_role_permission srp ON sp.id = srp.perms_id
+    LEFT JOIN sys_role sr on srp.role_id = sr.id
+    WHERE sr.id = #{roleId}
+  </select>
+</mapper>
