@@ -18,4 +18,13 @@ public class Employee {
     private Integer age;
     private Double salary;
 
+    public Employee(String name) {
+        this.name = name;
+    }
+
+    public Employee(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+
 }
