@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.clw</groupId>
+    <artifactId>018_springcloudsgg</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>cloud-provider-payment-8001</module>
+        <module>cloud-common</module>
+        <module>cloud-consumer-order-80</module>
+        <module>cloud-eureka-server-7001</module>
+        <module>cloud-eureka-server-7002</module>
+        <module>cloud-provider-payment-8002</module>
+        <module>cloud-consumer-order-feign-80</module>
+        <module>cloud-api</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.10.RELEASE</version>
+    </parent>
+
+    <properties>
+        <spring-cloud.version>Hoxton.SR11</spring-cloud.version>
+        <netflix-eureka-server.version>2.2.8.RELEASE</netflix-eureka-server.version>
+        <netflix-eureka-client.version>2.2.8.RELEASE</netflix-eureka-client.version>
+        <!--spring-cloud-starter-netflix-eureka-client 里集成了ribbon-->
+        <!--<netflix-ribbon.version>2.2.8.RELEASE</netflix-ribbon.version>-->
+        <openfeign.version>2.2.8.RELEASE</openfeign.version>
+        <netflix-hystrix.version>2.2.8.RELEASE</netflix-hystrix.version>
+        <netflix-hystrix-dashboard.version>2.2.8.RELEASE</netflix-hystrix-dashboard.version>
+        <netflix-zuul.version>2.2.8.RELEASE</netflix-zuul.version>
+
+        <mysql.version>8.0.15</mysql.version>
+        <druid.version>1.1.10</druid.version>
+        <mybatis-plus.version>3.4.3</mybatis-plus.version>
+        <junit.version>4.9</junit.version>
+        <lombok.version>1.12.2</lombok.version>
+        <log4j.version>1.2.16</log4j.version>
+        <logback.version>1.2.3</logback.version>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--SpringColud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--netflix-eureka-server-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                <version>${netflix-eureka-server.version}</version>
+            </dependency>
+
+            <!--netflix-eureka-client-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>${netflix-eureka-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${openfeign.version}</version>
+            </dependency>
+
+            <!--MySQL-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!--druid-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!--mapper 启动器-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!--junit-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!--log4j-->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <!--logback-->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

@@ -1,0 +1,32 @@
+# Base Config
+server:
+  port: 8011
+
+spring:
+  application:
+    name: cloud-provider-payment
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://cloud.upenv.com:7707/sp01?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+mybatis-plus:
+  type-aliases-package: com.clw.entity
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      id-type: assign_uuid
+
+eureka:
+  client:
+    register-with-eureka: true # 默认为true。false表示不向注册中心注册自己
+    fetch-registry: true # 默认为true。false表明自己就是注册中心，职责就是维护服务实例，不需要检索服务
+    service-url:
+      defaultZone: http://eureka1.com:7001/eureka/,http://eureka2.com:7002/eureka/
+  instance:
+    instance-id: payment8001 # 主机名称
+    prefer-ip-address: true # 开启Ip显示
+    lease-renewal-interval-in-seconds: 1 # 客户端向服务端发送心跳的时间间隔，单位为秒（默认30秒）
+    lease-expiration-duration-in-seconds: 2 # 服务端在收到最后一次心跳之后等待时间上限，单位秒（默认90秒），超时剔除服务
