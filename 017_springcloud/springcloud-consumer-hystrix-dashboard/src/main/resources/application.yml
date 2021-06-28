@@ -1,0 +1,6 @@
+server:
+  port: 9001
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: localhost # Origin parameter: http://localhost:8011/actuator/hystrix.stream is not in the allowed list of proxy host names.  If it should be allowed add it to hystrix.dashboard.proxyStreamAllowList.

@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: springcloud-consumer-dept
+
+# Eureka Config
+eureka:
+  client:
+    register-with-eureka: false # 是否将自己注册到 Eureka Server
+#    fetch-registry: false # 是否从Eureka Server获取注册的服务信息
+    service-url:
+      defaultZone: http://eureka1.com:7071/eureka/,http://eureka2.com:7072/eureka/,http://eureka3.com:7073/eureka/
+
+#Feign Config
+feign:
+  hystrix:
+    enabled: true  # 开启降级

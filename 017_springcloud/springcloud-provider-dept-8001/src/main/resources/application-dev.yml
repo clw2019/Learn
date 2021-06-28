@@ -1,0 +1,35 @@
+server:
+  port: 8001  #端口号
+
+# Mybatis-PLus Config
+mybatis-plus:
+  type-aliases-package: com.clw.entity
+#    config-location: classpath:mybatis-plus/mybatis-plus.xml
+  mapper-locations: classpath:mybatis-plus/mapper/*.xml
+  configuration:
+    cache-enabled: true # 开启Mybatis二级缓存，默认为 true
+
+# Spring Config
+spring:
+  application:
+    name: springcloud-provider-dept
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://cloud.upenv.com:7707/sp01?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+# Eureka Config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1.com:7071/eureka/,http://eureka2.com:7072/eureka/,http://eureka3.com:7073/eureka/
+  instance:
+    instance-id: springcloud-provider-8001 # 修改eureka 的默认描述
+#    prefer-ip-address: true
+
+# actuator 监控信息配置
+info:
+  app.name: clw_app
+#  company-name: clw-company

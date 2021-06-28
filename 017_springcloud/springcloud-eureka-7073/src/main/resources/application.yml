@@ -1,0 +1,20 @@
+server:
+  port: 7073
+
+spring:
+  application:
+    name: springcloud-consumer-dept
+
+# Eureka Config
+eureka:
+  instance:
+    hostname: eureka3.com # Eureka 服务实例名称
+  client:
+    register-with-eureka: false # 是否向 Eureka 注册中心注册自己
+    fetch-registry: false # 为 false 则表明自己是 注册中心
+    service-url:
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka # 单机
+      defaultZone: http://eureka1.com:7071/eureka,http://eureka2.com:7072/eureka # 集群
+  server:
+    eviction-interval-timer-in-ms: 15000 # eureka server 清理无效节点的时间间隔，默认60000毫秒，即60秒
+    enable-self-preservation: true # 是否开启自我保护模式，默认为true

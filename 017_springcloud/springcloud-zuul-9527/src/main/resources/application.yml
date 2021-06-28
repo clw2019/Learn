@@ -1,0 +1,19 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1.com:7071/eureka/,http://eureka2.com:7072/eureka/,http://eureka3.com:7073/eureka/
+  instance:
+    instance-id: zuul-9527
+zuul:
+  routes:
+    mydept.serviceId: springcloud-provider-dept # eureka注册中心的服务提供方路由名称
+    mydept.path: /mydept/**  # 将eureka注册中心的服务提供方路由名称 改为自定义路由名称
+  ignored-services: * #忽略,隐藏全部的服务名称，不能再使用这个路径访问了
+  prefix: /prefix # 设置公共的前缀 http://localhost:9527/prefix/mydept/dept/queryById/1
