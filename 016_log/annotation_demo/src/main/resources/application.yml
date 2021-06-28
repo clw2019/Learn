@@ -1,0 +1,6 @@
+
+# SpringBoot 集成 logback
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: D:/nmyslog/nmys

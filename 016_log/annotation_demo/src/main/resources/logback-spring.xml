@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+    <!--
+        配置集中管理属性
+        可以直接改变属性的 value 值
+        格式：${name}
+    -->
+    <property name="pattern" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L [%thread] %m%n" />
+    <property name="htmlPattern" value="%-5level%d{yyyy-MM-dd HH:mm:ss.SSS}%c%M%L%thread%m" />
+    <!-- 定义日志文件的保存路径-->
+    <property name="log_dir" value="D:/nmyslog/nmys" />
+    <!--
+        日志输出格式：
+        %-5level日志级别
+        %d{yyyy-MM-dd HH:mm:ss.SSS} 日期
+        %c类的完整名称
+        %M为method
+        %L为行号
+        %thread线程名称
+        %m或者%msg为信息
+        %n为换行
+    -->
+
+    <!--控制台输出日志的 appender-->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <!--控制输出流对象 默认 System.out 改为 System.err-->
+        <!--<target>System.err</target>-->
+        <!--日志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--日志文件输出的 appender-->
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <!--日志文件保存路径-->
+        <file>${log_dir}/logback.log</file>
+        <!--日志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--html 格式日志文件输出 append-->
+    <appender name="htmlAppender" class="ch.qos.logback.core.FileAppender">
+        <!--日志文件保存路径-->
+        <file>${log_dir}/logback.html</file>
+        <!--html 消息格式配置-->
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>${htmlPattern}</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!--日志拆分 和 归档压缩 appender-->
+    <appender name="rollAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志文件保存路径-->
+        <file>${log_dir}/roll_logback.log</file>
+        <!--日志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!--指定拆分规则-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--按照时间和压缩格式声明拆分的文件名 %i 顺序 .gz 压缩-->
+            <fileNamePattern>${log_dir}/rolling.%d{yyyy-MM-dd}.log%i.gz</fileNamePattern>
+            <!--按照文件大小拆分-->
+            <maxFileSize>1MB</maxFileSize>
+        </rollingPolicy>
+        <!--日志级别过滤器-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--日志过滤规则-->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--KafKa appender-->
+    <appender name="kafkaAppender" class="com.clw.kafka.KafkaAppender">
+        <!--日志文件保存路径-->
+        <!--<file>${log_dir}/kafka.log</file>-->
+        <!--日志消息格式配置-->
+        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+        <!--<pattern>${pattern}</pattern>-->
+        <!--</encoder>-->
+    </appender>
+
+    <!--异步日志-->
+    <appender name="asyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <!--指定某个具体的appender-->
+        <!--<appender-ref ref="rollAppender" />-->
+        <appender-ref ref="kafkaAppender" />
+    </appender>
+
+
+
+    <!--root logger 配置 会输出小于当前级别的 error < warn < info < debugger < trace-->
+    <root level="INFO">
+        <appender-ref ref="consoleAppender" />
+        <appender-ref ref="fileAppender" />
+        <appender-ref ref="htmlAppender" />
+        <!--<appender-ref ref="rollAppender" />-->
+        <appender-ref ref="asyncAppender" />
+        <!--<appender-ref ref="kafkaAppender" />-->
+
+    </root>
+
+    <!--
+        自定义 logger 对象
+        additivity="false" 自定义 logger 对象是否继承 rootLogger,产生的日志不会被存储到日志文件
+    -->
+    <!--<logger name="com.clw" level="info" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>-->
+</configuration>
