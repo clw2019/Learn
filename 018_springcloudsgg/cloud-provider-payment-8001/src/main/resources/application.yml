@@ -8,9 +8,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://cloud.upenv.com:7707/sp01?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/018_springcloudsgg?serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: wj113
 
 mybatis-plus:
   type-aliases-package: com.clw.entity

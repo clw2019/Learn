@@ -9,13 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-consumer-order-fegin-80</artifactId>
+    <artifactId>cloud-consumer-order-feign-80</artifactId>
 
     <dependencies>
         <!--cloud-common-->
         <dependency>
             <groupId>com.clw</groupId>
             <artifactId>cloud-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.clw</groupId>
+            <artifactId>cloud-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
