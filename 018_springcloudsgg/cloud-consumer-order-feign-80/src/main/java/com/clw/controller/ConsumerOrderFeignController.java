@@ -26,4 +26,9 @@ public class ConsumerOrderFeignController {
         return feignClientService.getById(id);
     }
 
+    @GetMapping("/timeout")
+    public String timeout() {
+        return feignClientService.timeout();
+    }
+
 }

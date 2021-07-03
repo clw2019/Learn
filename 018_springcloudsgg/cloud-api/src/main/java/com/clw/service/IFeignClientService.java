@@ -13,4 +13,7 @@ public interface IFeignClientService {
     @GetMapping("/payment/get/{id}")
     public CommonResult getById(@PathVariable("id") String id);
 
+    @GetMapping("/payment/timeout")
+    public String timeout();
+
 }

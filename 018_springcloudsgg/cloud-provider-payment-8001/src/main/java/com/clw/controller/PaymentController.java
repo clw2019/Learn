@@ -1,4 +1,8 @@
-package com.clw.controller;;
+package com.clw.controller;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Resource;
 
 import com.clw.common.CommonResult;
 import com.clw.entity.Payment;
@@ -7,10 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.List;
+;
 
 @RestController
 @RequestMapping("/payment")
@@ -51,6 +59,18 @@ public class PaymentController {
             return new CommonResult(400, "插入失败 => port : "+ port);
         }
         return new CommonResult(200, "插入成功 => port : "+ port,save);
+    }
+
+    @GetMapping("/timeout")
+    public String timeout() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "timeout is fail, the port is => " + port;
+        } finally {
+        }
+        return "timeout is success, the port is => " + port;
     }
 
     @GetMapping("/discovery")
