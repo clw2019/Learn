@@ -50,4 +50,23 @@ public class OrderHystrixController {
     public String defaultTimeoutHandler() {
         return "Global default HystrixCommand。。。";
     }
+
+    // 服务熔断
+    @GetMapping("/circuitBreaker/{id}")
+    @HystrixCommand(fallbackMethod = "circuitBreakerFallBack", commandProperties = {
+            @HystrixProperty(name = "circuitBreaker.enabled", value = "true"), // 是否开启断路器
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"), // 请求次数
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"), // 时间窗口期
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60"), // 失败率达到多少后跳闸
+    })
+    public String circuitBreaker(@PathVariable("id") Integer id) {
+        if (id < 0) {
+            throw new RuntimeException("===== id 不能为负数 =====");
+        }
+        return Thread.currentThread().getName() + " 调用成功。。。";
+    }
+
+    public String circuitBreakerFallBack(@PathVariable("id") Integer id) {
+        return "===== id 不能为负数, 请稍后再试 =====";
+    }
 }
