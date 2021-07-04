@@ -3,6 +3,7 @@ package com.clw.controller;
 import javax.annotation.Resource;
 
 import com.clw.service.IFeignClientHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/orderHystrix")
+@DefaultProperties(defaultFallback = "defaultTimeoutHandler")
 public class OrderHystrixController {
 
     @Resource
@@ -35,7 +37,17 @@ public class OrderHystrixController {
         return hystrixService.getTimeout(id);
     }
 
+    @GetMapping("/getTimeout2/{id}")
+    @HystrixCommand
+    public String getTimeout2(@PathVariable("id") String id) {
+        return hystrixService.getTimeout(id);
+    }
+
     public String getTimeoutHandler(@PathVariable("id") String id) {
         return "我是消费之80，对方系统繁忙，或者自己运行出错，请稍后再试。。。";
+    }
+
+    public String defaultTimeoutHandler() {
+        return "Global default HystrixCommand。。。";
     }
 }
