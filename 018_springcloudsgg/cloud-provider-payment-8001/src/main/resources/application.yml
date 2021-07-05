@@ -1,6 +1,6 @@
 # Base Config
 server:
-  port: 8011
+  port: 8001
 
 spring:
   application:
