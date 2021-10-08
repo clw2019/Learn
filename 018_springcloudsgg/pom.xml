@@ -42,7 +42,7 @@
         <netflix-hystrix-dashboard.version>2.2.8.RELEASE</netflix-hystrix-dashboard.version>
         <netflix-zuul.version>2.2.8.RELEASE</netflix-zuul.version>
 
-        <mysql.version>8.0.15</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <druid.version>1.1.10</druid.version>
         <mybatis-plus.version>3.4.3</mybatis-plus.version>
         <junit.version>4.9</junit.version>
